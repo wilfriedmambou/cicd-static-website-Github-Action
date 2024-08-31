@@ -94,7 +94,9 @@ jobs:
           heroku container:login
           heroku create ${STAGING}  || echo "project already exist"
           heroku stack:set container -a ${STAGING} 
-          heroku stack:set container -a ${STAGING} 
+          heroku container:push web -a ${STAGING}
+          heroku container:release web -a ${STAGING}
+          heroku logs --tail -a ${STAGING} 
 
       - name: Deploy PRODUCTION
         env:
@@ -103,4 +105,6 @@ jobs:
           heroku container:login
           heroku create ${PRODUCTION}  || echo "project already exist"
           heroku stack:set container -a ${PRODUCTION} 
-          heroku stack:set container -a ${PRODUCTION} 
+          heroku container:push web -a ${PRODUCTION}
+          heroku container:release web -a ${PRODUCTION}
+          heroku logs --tail -a ${PRODUCTION} 
